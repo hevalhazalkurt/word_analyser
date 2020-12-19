@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 import operator
 
@@ -7,17 +6,24 @@ def home(request):
 
 
 def count(request):
+    # get the text
     fulltext = request.GET["fulltext"]
+
+    # define the variables
     chars = len(fulltext)
     sentences = len(fulltext.split("."))
     edited = fulltext
 
-    punctuation = [",", "'", "-", "!", ".", "?", ":", "(", ")", "{", "}", "[", "]", "&", "^", "/", "=", "*", "_", ";", "<", ">", '"', "—", "”", "’", "“", "...", ".."]
-    limited = ["re", "are", "am", "is", "ll", "the", "that", "but", "and", "have", "has", "had", "for", "this", "who", "they", "our", "what", "which", "from", "these", "there", "not", "ago", "any", "some", "those", "their", "will", "nor", "did", "thus", "here", "with", "where", "how", "its", "while", "also", "could", "been", "into", "much", "many", "non", "should", "was", "when", "you", "me", "your", "us", "than", "him", "her", "why", "were", "then"]
+    # define the punctuation characters and limited words
+    punctuation = [",", "'", "-", "!", ".", "?", ":", "(", ")", "{", "}", "[", "]", "&", "^", "/", "=", "*",
+                "_", ";", "<", ">", '"', "—", "”", "’", "“", "...", "..", "‘"]
+    limited = ["re", "are", "am", "is", "ll", "the", "that", "but", "and", "have", "has", "had", "for", "this", "who", "they", "our", "what", "which", "would",
+            "from", "these", "there", "not", "ago", "any", "some", "those", "their", "will", "nor", "did", "thus", "here", "with", "where", "how", "its", "while",
+            "also", "could", "been", "into", "much", "many", "non", "should", "was", "when", "you", "me", "your", "us", "than", "him", "her", "why", "were", "then"]
+
+    # get positive and negative words
     positive_file = open("word_analyser/positive_words.txt", "r").read().split()
     negative_file = open("word_analyser/negative_words.txt", "r").read().split()
-    print(positive_file)
-    print(negative_file)
 
     # remove punctuations
     for char in edited:
@@ -40,9 +46,10 @@ def count(request):
         else:
             neutral += 1
 
-    # word accumulation
+    # word counter
     word_counts = {}
     limited_dict = {}
+
     for word in wordlist:
         if len(word) > 2:
             if word.lower() not in limited:

@@ -1,18 +1,42 @@
 from django.shortcuts import render
 import operator
+import requests
+import re
+from bs4 import BeautifulSoup
+
+# html cleaner
+def cleanhtml(raw_html):
+    cleanr = re.compile('<body.*?>(.*)</body>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext
+
+
 
 def home(request):
     return render(request, 'home.html')
 
 
 def count(request):
-    # get the text
-    fulltext = request.GET["fulltext"]
 
-    # define the variables
+    # get the text from link or text area
+    try:
+        linktext = request.GET["linktext"]
+        response = requests.get(linktext)
+        text = cleanhtml(response.text)
+        soup = BeautifulSoup(text, 'html.parser')
+        fulltext = soup.get_text()
+        fulltext = fulltext.strip()
+        fulltext = fulltext.replace("\n", " ")
+    except:
+        fulltext = request.GET["fulltext"]
+
+
+
+    # define some variables for counter
     chars = len(fulltext)
     sentences = len(fulltext.split("."))
     edited = fulltext
+
 
     # define the punctuation characters and limited words
     punctuation = [",", "'", "-", "!", ".", "?", ":", "(", ")", "{", "}", "[", "]", "&", "^", "/", "=", "*",
@@ -51,7 +75,7 @@ def count(request):
     limited_dict = {}
 
     for word in wordlist:
-        if len(word) > 2:
+        if len(word) > 2 and len(word) < 20:
             if word.lower() not in limited:
                 if word.lower() in word_counts:
                     word_counts[word.lower()] += 1
@@ -67,6 +91,8 @@ def count(request):
     limited_words = len(limited_dict)
     sortedwords = sorted(word_counts.items(), key=operator.itemgetter(1), reverse=True)
     return render(request, 'count.html', {"fulltext": fulltext, "count": len(wordlist), "word_counts": sortedwords, "characters": chars, "sentences": sentences, "limited": limited_words, "positives": positives, "negatives": negatives, "neutral": neutral} )
+
+
 
 
 def about(request):

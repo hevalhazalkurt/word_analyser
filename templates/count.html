@@ -154,33 +154,35 @@
 			.output.row span {
 				font-size: 1.3rem;
 			}
+		}
 
 
-			@media (max-width: 600px) {
+		@media (max-width: 600px) {
 
-				/* rewriting old styles */
-				body {
-					width: 95%;
-				}
+			/* rewriting old styles */
+			body {
+				width: 95%;
+			}
 
-				.output.row {
-					border: none;
-					background-color: #FFF;
-				}
+			.output.row {
+				border: none;
+				background-color: #FFF;
+			}
 
-				.output.row div {
-					display: block;
-					width: 100%;
-					padding: 10px 15px;
-					margin: 2% auto;
-					border: 1px solid #DDD;
-					font-size: 1.8rem;
-					background-color: #F9F9F9;
-				}
+			.output.row div {
+				display: block;
+				width: 100%;
+				padding: 10px 15px;
+				margin: 2% auto;
+				border: 1px solid #DDD;
+				font-size: 1.8rem;
+				background-color: #F9F9F9;
+			}
 
-				.output.row span {
-					font-size: 2rem;
-				}
+			.output.row span {
+				font-size: 2rem;
+			}
+		}
 	</style>
 </head>
 
@@ -218,7 +220,7 @@
 
 
 	<div class="container">
-	<h2>Word Count</h2>
+		<h2>Word Count</h2>
 		<div class="output row">
 			{% for k,v in word_counts %}
 			<div> <b>{{ k }} </b> = {{ v }}</div>

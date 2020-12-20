@@ -67,19 +67,19 @@
 			text-align: center;
 			padding: 10px;
 			margin: 1% 0 3%;
-			color: #111 ;
+			color: #111;
 		}
 
 		a {
 			font-weight: 600;
 			text-align: center;
 			margin: 1% 0 3%;
-			color: #111 ;
+			color: #111;
 		}
 
-		textarea {
+		.textarea {
 			width: 100%;
-			height: 250px;
+			height: 150px;
 			padding: 10px;
 			border: 1px solid #d9d9d9;
 			outline: none;
@@ -89,10 +89,25 @@
 			font-family: 'Montserrat', sans-serif;
 		}
 
+
+		.linkarea {
+			width: 100%;
+			height: 50px;
+			padding: 10px;
+			border: 1px solid #d9d9d9;
+			outline: none;
+			font-size: 1rem;
+			resize: none;
+			line-height: 1.5rem;
+			font-family: 'Montserrat', sans-serif;
+		}
+
+
+
 		input {
 			position: relative;
 			display: block;
-			font-size: 1.5rem;
+			font-size: 1.3rem;
 			margin: 0 auto;
 			font-weight: 800;
 			font-family: 'Montserrat', sans-serif;
@@ -172,6 +187,9 @@
 				.output.row span {
 					font-size: 2rem;
 				}
+			}
+
+		}
 	</style>
 
 </head>
@@ -180,13 +198,22 @@
 	<div class="container">
 		<nav><a href="{% url 'about' %}">About</a></nav>
 		<br>
-	<h1>Word Analyser</h1>
+		<h1>Word Analyser</h1>
 
-	<form action="{% url 'count' %}">
-		<textarea cols="100" rows="30" name="fulltext" placeholder="Enter your text here"></textarea>
-		<br> <br>
-		<input type="submit" value="Count!"></input>
-	</form>
+
+		<form action="{% url 'count' %}">
+			<textarea class="linkarea" cols="100" rows="30" name="linktext" placeholder="Enter your link here"></textarea>
+			<br> <br>
+			<input type="submit" value="Get the link text!"></input>
+		</form>
+
+		<br><br><br>
+
+		<form action="{% url 'count' %}">
+			<textarea class="textarea" cols="100" rows="30" name="fulltext" placeholder="Enter your text here"></textarea>
+			<br> <br>
+			<input type="submit" value="Analyse the text!"></input>
+		</form>
 	</div>
 </body>
 
